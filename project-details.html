@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RMTS - Modern Transport Solution | Project Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    :root {
+      --primary: #2A2A2A;
+      --accent: #FF6B6B;
+      --light: #F8F9FA;
+      --dark: #212529;
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.7;
+    }
+    /* Header (Compact Hero Section) */
+    .hero-header {
+      background: linear-gradient(135deg, var(--primary) 0%, #404040 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%23000000" opacity="0.1"/></svg>');
+      pointer-events: none;
+    }
+    .hero-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+      letter-spacing: -0.5px;
+    }
+    .project-tag {
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+    /* Main Content Grid */
+    .project-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 4rem;
+    }
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    /* Gallery Item Container */
+    .gallery-item-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .gallery-item {
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: zoom-in;
+      transition: var(--transition);
+      width: 100%;
+      position: relative;
+      aspect-ratio: 16 / 9;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    /* Gallery Caption */
+    .gallery-caption {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+    /* Project Article */
+    .project-article {
+      margin-bottom: 2rem;
+    }
+    .project-article h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .project-article p {
+      margin-bottom: 1.5rem;
+    }
+    .project-article h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .feature-list {
+      margin-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .feature-list li {
+      margin-bottom: 0.5rem;
+    }
+    /* Sidebar / Project Info */
+    .project-info {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      position: static;
+    }
+    .info-section {
+      margin-bottom: 2.5rem;
+    }
+    .info-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--primary);
+    }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .tech-item {
+      background: var(--light);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    /* Updated Tech Stack Icons and Items */
+    .tech-item i.fas.fa-code {
+      color: #68217A; /* C# icon color */
+    }
+    .tech-item i.fas.fa-map {
+      color: #3BB2D0; /* Mapbox icon color */
+    }
+    /* Live Demo Button */
+    .demo-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      transition: var(--transition);
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+    .demo-button:hover {
+      background: #FF5252;
+      transform: translateY(-2px);
+    }
+    /* Lightbox Styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      background: #111;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: var(--transition);
+    }
+    .lightbox-close:hover {
+      background: var(--accent);
+    }
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .project-container {
+        grid-template-columns: 1fr;
+      }
+      .project-info {
+        position: static;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero-header h1 {
+        font-size: 2.2rem;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero-header">
+    <h1>Rajkot Mass Transport Service</h1>
+    <div class="project-tag">Modern Public Transit System</div>
+  </header>
+
+  <main class="project-container">
+    <div class="project-content">
+      <div class="gallery-grid">
+        <!-- RMTS Bus Timing Page -->
+        <div class="gallery-item-container">
+          <div class="gallery-item" onclick="openLightbox('/img/Project1.png')">
+            <img src="/img/Project1.png" alt="RMTS Bus Timing Page">
+          </div>
+          <span class="gallery-caption">RMTS Bus Timing Page</span>
+        </div>
+        <!-- NearBy Bus Stop -->
+        <div class="gallery-item-container">
+          <div class="gallery-item" onclick="openLightbox('/img/Project1_3.png')">
+            <img src="/img/Project1_3.png" alt="NearBy Bus Stop">
+          </div>
+          <span class="gallery-caption">NearBy Bus Stop</span>
+        </div>
+        <!-- Grievance Page -->
+        <div class="gallery-item-container">
+          <div class="gallery-item" onclick="openLightbox('/img/Project1_2.png')">
+            <img src="/img/Project1_2.png" alt="Grievance Page">
+          </div>
+          <span class="gallery-caption">Grievance Page</span>
+        </div>
+        <!-- All Routes -->
+        <div class="gallery-item-container">
+          <div class="gallery-item" onclick="openLightbox('/img/Project1_4.png')">
+            <img src="/img/Project1_4.png" alt="All Routes">
+          </div>
+          <span class="gallery-caption">All Routes</span>
+        </div>
+      </div>
+
+      <article class="project-article">
+        <h2>Transforming Urban Transit</h2>
+        <p>
+          RMTS (Rajkot Mass Transport Service) is an innovative digital platform developed using .NET for both the frontend and backend, with SQL Server as the database. The application empowers users to enter their starting and ending points to search for available bus routes. It then displays a variety of bus cards representing different routes.
+        </p>
+        <p>
+          By clicking on any bus card, detailed route information is revealed—including distance, travel time, directional maps, and expected arrival times. The platform further enhances user experience by automatically detecting the user's current location to display nearby pickup points within a 3 km radius, complete with distance metrics.
+        </p>
+        <p>
+          Additionally, RMTS provides a comprehensive listing of all Rajkot routes with detailed information, and it incorporates an integrated complaint and feedback section where users can select a bus number to register issues and share feedback.
+        </p>
+        
+        <h3>Key Features</h3>
+        <ul class="feature-list">
+          <li>Input start and end points to search for bus routes</li>
+          <li>Display of bus cards with route details and quick view options</li>
+          <li>Detailed view showing distance, travel time, map directions, and arrival times</li>
+          <li>Current location detection with nearby pickup points (within 3 km)</li>
+          <li>Comprehensive listing of all Rajkot routes with detailed information</li>
+          <li>Integrated complaint and feedback section for bus-specific issues</li>
+        </ul>
+
+        <h3>Technical Implementation</h3>
+        <p>
+          RMTS is built using .NET for both the frontend and backend, ensuring a robust and scalable architecture. SQL Server handles all data management efficiently. The system leverages real-time geolocation services and advanced mapping libraries to offer dynamic route planning, current location detection, and detailed navigation maps. Furthermore, its modular design seamlessly integrates a complaint and feedback module for enhanced user interaction.
+        </p>
+      </article>
+    </div>
+
+    <aside class="project-info">
+      <div class="info-section">
+        <h3><i class="fas fa-tools"></i> Tech Stack</h3>
+        <div class="tech-stack">
+          <div class="tech-item">
+            <i class="fab fa-microsoft"></i> ASP.NET Core
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-code"></i> C#
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-database"></i> SQL Server
+          </div>
+          <!-- Uncomment below if Mapbox GL JS is needed -->
+          <!-- <div class="tech-item">
+            <i class="fas fa-map"></i> Mapbox GL JS
+          </div> -->
+        </div>
+      </div>
+    
+      <div class="info-section">
+        <h3><i class="fas fa-trophy"></i> Achievements</h3>
+        <p>Currently under continuous development – stay tuned for upcoming milestones and improvements!</p>
+      </div>
+    
+      <div class="info-section">
+        <h3><i class="fas fa-external-link-alt"></i> Live Demo</h3>
+        <a href="https://rmts.somee.com" class="demo-button">
+          <i class="fas fa-rocket"></i> Launch Demo
+        </a>
+
+        <!-- Gap between buttons -->
+        <div style="margin-top: 1rem;">
+            <div class="demo-button" id="homeBtn">
+              <i class="fas fa-home"></i> Back to home
+            </div>
+          </div>
+      </div>
+
+      
+    </aside>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <i class="fas fa-times"></i>
+      </button>
+      <img class="lightbox-img" id="lightboxImage" alt="Enlarged view">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImage');
+      const caption = document.getElementById('lightboxCaption');
+      img.src = src;
+      caption.textContent = event.target.alt;
+      lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // Close lightbox on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // JavaScript for the Back to Home button
+    document.getElementById('homeBtn').addEventListener('click', function() {
+  window.location.href = "index.html#projects"; // This will open the project section on the index page
+});
+  </script>
+</body>
+</html>
