@@ -618,19 +618,34 @@
 
     // Set hidden field values on page load
     window.addEventListener("DOMContentLoaded", () => {
-      // Set current date/time in ISO format
-      document.getElementById('submitted_at').value = new Date().toISOString();
+    document.getElementById('submitted_at').value = new Date().toISOString();
 
-      // Attempt to set user's location (latitude, longitude)
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
-        }, function(error) {
-          // If location is not permitted or fails, leave the field blank
-          document.getElementById('location').value = "";
-        });
-      }
-    });
+    if ("permissions" in navigator && "geolocation" in navigator) {
+      navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
+        if (permissionStatus.state === "granted") {
+          // Permission already granted
+          navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+        } else if (permissionStatus.state === "prompt") {
+          // Ask only if user has not made a choice yet
+          navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+        } else {
+          // Permission denied
+          setEmptyLocation();
+        }
+      });
+    } else {
+      // Permissions API not supported
+      navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+    }
+
+    function setLocation(position) {
+      document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
+    }
+
+    function setEmptyLocation() {
+      document.getElementById('location').value = "";
+    }
+  });
 
     // AJAX form submission using SweetAlert2 with loading indicator
     const form = document.getElementById("contactForm");
