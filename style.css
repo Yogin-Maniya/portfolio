@@ -741,7 +741,11 @@ body {
 
 .social-links {
     display: flex;
+    justify-content: flex-start;
     gap: 1rem;
+}
+.footer-section {
+  text-align: left; /* Ensures text and icons align to left */
 }
 
 .icon-link {
@@ -758,6 +762,12 @@ body {
     padding: 2rem 0;
     text-align: center;
     color: var(--text-secondary);
+}
+.footer-section ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 /* Responsive Design */
