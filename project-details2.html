@@ -1,496 +1,757 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exam Portal | Project Details</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    /* Base Styles */
-    :root {
-      --primary: #2A2A2A;
-      --accent: #FF6B6B;
-      --light: #F8F9FA;
-      --dark: #212529;
-      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    body {
-      background-color: var(--light);
-      color: var(--dark);
-      line-height: 1.7;
-    }
-    /* Header (Compact Hero Section) */
-    .hero-header {
-      background: linear-gradient(135deg, var(--primary) 0%, #404040 100%);
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%23000000" opacity="0.1"/></svg>');
-      pointer-events: none;
-    }
-    .hero-header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      position: relative;
-      z-index: 1;
-      letter-spacing: -0.5px;
-    }
-    .project-tag {
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 1.5rem;
-      border-radius: 2rem;
-      font-size: 0.9rem;
-      display: inline-block;
-      margin-top: 0.5rem;
-    }
-    /* Main Content Grid */
-    .project-container {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 4rem;
-    }
-    /* Gallery Grid */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-    /* Gallery Item Container */
-    .gallery-item-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .gallery-item {
-      border-radius: 1rem;
-      overflow: hidden;
-      cursor: zoom-in;
-      transition: var(--transition);
-      width: 100%;
-      position: relative;
-      aspect-ratio: 16 / 9;
-    }
-    .gallery-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-    /* Gallery Caption */
-    .gallery-caption {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-      color: var(--primary);
-    }
-    /* Project Article */
-    .project-article {
-      margin-bottom: 2rem;
-    }
-    .project-article h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-    .project-article p {
-      margin-bottom: 1.5rem;
-    }
-    .project-article h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-    .feature-list {
-      margin-left: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .feature-list li {
-      margin-bottom: 0.5rem;
-    }
-    /* Sidebar / Project Info */
-    .project-info {
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      position: static;
-    }
-    .info-section {
-      margin-bottom: 2.5rem;
-    }
-    .info-section h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--primary);
-    }
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    .tech-item {
-      background: var(--light);
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    /* Updated Tech Stack Icons and Items */
-    .tech-item i.fab.fa-react {
-      color: #61DBFB;
-    }
-    .tech-item i.fab.fa-node-js {
-      color: #68A063;
-    }
-    .tech-item i.fas.fa-database {
-      color: #3BB2D0;
-    }
-    /* Demo Button - Popup Modal for Live Demo */
-    .demo-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 2rem;
-      background: var(--accent);
-      color: white;
-      border-radius: 0.75rem;
-      text-decoration: none;
-      transition: var(--transition);
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .demo-button:hover {
-      background: #FF5252;
-      transform: translateY(-2px);
-    }
-    /* Download CV Button Styling */
-    .download-cv-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 2rem;
-      background: var(--primary);
-      color: white;
-      border-radius: 0.75rem;
-      text-decoration: none;
-      transition: var(--transition);
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    .download-cv-btn:hover {
-      background: #333;
-      transform: translateY(-2px);
-    }
-    /* Lightbox Modal for Images */
-    .lightbox {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .lightbox.active {
-      display: flex;
-    }
-    .lightbox-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      background: #111;
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-    .lightbox-img {
-      max-width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-    }
-    .lightbox-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: white;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: var(--transition);
-    }
-    .lightbox-close:hover {
-      background: var(--accent);
-    }
-    /* Popup Modal for Live Demo (Under Construction Message) */
-    .popup-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 1100;
-      justify-content: center;
-      align-items: center;
-    }
-    .popup-modal.active {
-      display: flex;
-    }
-    .popup-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-    }
-    .popup-content h2 {
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-    .popup-content p {
-      margin-bottom: 1.5rem;
-    }
-    .popup-content img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 1rem;
-    }
-    .popup-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: var(--primary);
-    }
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .project-container {
-        grid-template-columns: 1fr;
-      }
-      .project-info {
-        position: static;
-      }
-    }
-    @media (max-width: 768px) {
-      .hero-header h1 {
-        font-size: 2.2rem;
-      }
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam Portal | Project Details</title>
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- SweetAlert2 CDN for modern alerts (if needed for future additions) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom Styles (minimal, focusing on animations, gradients, and specific overrides) -->
+     <style>
+        /* Define custom CSS variables for easy theming and consistent colors */
+        :root {
+            --bs-body-bg: #0a0f1c; /* Deep dark background */
+            --bs-body-color: #f8fafc; /* Bright white text */
+            --bs-secondary-bg: #151b2d; /* Slightly lighter dark for section backgrounds */
+            --bs-secondary-color: #a0aec0; /* Muted grey text for paragraphs */
+            --bs-primary: #3b82f6; /* Vibrant blue accent */
+            --bs-primary-hover: #2563eb; /* Darker blue on hover */
+            --bs-accent-secondary: #8b5cf6; /* A subtle purple/violet secondary accent */
+            --bs-card-bg: #1f2937; /* Darker card background for more contrast */
+            --bs-border-color: #2d3748; /* Darker border for elements */
+            --bs-success: #10b981;
+            --bs-warning: #f59e0b;
+            --bs-danger: #ef4444;
+            --bs-gradient-start: #0f172a; /* Hero gradient start */
+            --bs-gradient-end: #0a0f1c; /* Hero gradient end */
+        }
+
+        /* Base styles for body and HTML */
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.7; /* Improved readability */
+            color: var(--bs-body-color);
+            background-color: var(--bs-body-bg);
+            overflow-x: hidden; /* Prevent horizontal scroll on animations */
+        }
+
+        /* Scroll Progress Bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 5px; /* Thicker bar */
+            background: linear-gradient(90deg, var(--bs-primary), var(--bs-accent-secondary)); /* Gradient fill */
+            z-index: 1050; /* Above most content, below modals */
+            border-radius: 0 5px 5px 0; /* Rounded right corner */
+        }
+
+        /* Header (Compact Hero Section) */
+        .hero-header {
+            background: linear-gradient(135deg, var(--bs-gradient-start) 0%, var(--bs-gradient-end) 100%);
+            color: white;
+            padding: 5rem 2rem; /* More padding */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            animation: pulse-bg 12s infinite alternate ease-in-out; /* Subtle breathing animation */
+            pointer-events: none;
+        }
+        .hero-header::after { /* New: Subtle moving gradient overlay */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05), transparent);
+            background-size: 200% 200%;
+            animation: moveGradient 15s linear infinite;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        @keyframes pulse-bg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.08); opacity: 0.9; }
+        }
+        @keyframes moveGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .hero-header h1 {
+            font-size: 3.5rem; /* Larger heading */
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--bs-body-color), var(--bs-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .project-tag {
+            background: linear-gradient(90deg, var(--bs-primary), var(--bs-accent-secondary));
+            color: white;
+            padding: 0.7rem 2rem; /* More padding */
+            border-radius: 2.5rem; /* More rounded */
+            font-size: 1rem; /* Larger font */
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .project-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Main Content Grid */
+        .project-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adjusted min-width for better responsiveness */
+            gap: 2.5rem; /* More gap */
+            margin-bottom: 4rem;
+        }
+        /* Gallery Item Container */
+        .gallery-item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--bs-card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .gallery-item {
+            border-radius: 0.75rem; /* Slightly less rounded than container */
+            overflow: hidden;
+            cursor: zoom-in;
+            width: 100%;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            border: 2px solid var(--bs-border-color); /* Subtle border */
+            transition: transform 0.4s ease, filter 0.4s ease; /* Added filter transition */
+        }
+        .gallery-item:hover {
+            transform: scale(1.03); /* Slight zoom on image hover */
+            filter: brightness(1.1); /* Slightly brighter on hover */
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        /* Gallery Caption */
+        .gallery-caption {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--bs-secondary-color);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Project Article */
+        .project-article {
+            margin-bottom: 2rem;
+            color: var(--bs-secondary-color);
+        }
+        .project-article h2 {
+            font-size: 2.5rem; /* Larger heading */
+            margin-bottom: 1.5rem;
+            color: var(--bs-body-color);
+            font-weight: 700;
+        }
+        .project-article p {
+            margin-bottom: 1.8rem; /* More spacing */
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .project-article h3 {
+            font-size: 1.8rem; /* Larger sub-heading */
+            margin-bottom: 1.2rem;
+            color: var(--bs-body-color);
+            font-weight: 600;
+        }
+        .feature-list {
+            margin-left: 1.5rem; /* More indentation */
+            margin-bottom: 2rem;
+            list-style: none; /* Remove default bullet */
+            padding-left: 0;
+        }
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.8rem; /* Space for custom bullet */
+            color: var(--bs-secondary-color);
+            font-size: 1.05rem;
+            transition: color 0.2s ease, transform 0.2s ease; /* Added hover effect */
+        }
+        .feature-list li:hover {
+            color: var(--bs-primary); /* Highlight on hover */
+            transform: translateX(5px); /* Slight slide on hover */
+        }
+        .feature-list li::before {
+            content: '\2713'; /* Checkmark icon */
+            color: var(--bs-primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            top: 0;
+        }
+
+        /* Sidebar / Project Info */
+        .project-info {
+            background: var(--bs-card-bg);
+            padding: 2.5rem; /* More padding */
+            border-radius: 1.25rem; /* More rounded */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            position: sticky; /* Make sidebar sticky */
+            top: 2rem; /* Distance from top when sticky */
+            align-self: start; /* Align to the start of the grid area */
+            border: 1px solid var(--bs-border-color);
+        }
+        .info-section {
+            margin-bottom: 3rem; /* More space between sections */
+        }
+        .info-section h3 {
+            font-size: 1.6rem; /* Larger heading */
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem; /* More space for icon */
+            color: var(--bs-body-color);
+            font-weight: 700;
+        }
+        .info-section h3 i {
+            color: var(--bs-primary);
+            font-size: 1.8rem; /* Larger icons */
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem; /* More gap */
+        }
+        .tech-item {
+            background: var(--bs-secondary-bg);
+            color: var(--bs-body-color);
+            padding: 0.6rem 1.2rem; /* More padding */
+            border-radius: 0.75rem; /* More rounded */
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            border: 1px solid var(--bs-border-color);
+            transition: all 0.3s ease;
+        }
+        .tech-item:hover {
+            background-color: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+            border-color: var(--bs-primary);
+        }
+        /* Updated Tech Stack Icons and Colors */
+        .tech-item i.fab.fa-microsoft { color: #0078D4; } /* Microsoft Blue */
+        .tech-item i.fas.fa-code { color: #68217A; } /* C# Purple */
+        .tech-item i.fas.fa-database { color: #F29111; } /* SQL Orange */
+        .tech-item i.fas.fa-map { color: #3BB2D0; } /* Mapbox Cyan */
+
+        /* Live Demo Button */
+        .demo-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem; /* More gap */
+            padding: 1.2rem 2.5rem; /* Larger button */
+            background: linear-gradient(90deg, var(--bs-primary), var(--bs-accent-secondary));
+            color: white;
+            border-radius: 10px; /* More rounded */
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .demo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15); /* Subtle shine effect */
+            transition: all 0.4s ease-in-out;
+            transform: skewX(-20deg);
+        }
+        .demo-button:hover::before {
+            left: 100%;
+        }
+        .demo-button:hover {
+            background: linear-gradient(90deg, var(--bs-primary-hover), var(--bs-accent-secondary));
+            transform: translateY(-5px) scale(1.02); /* Added scale on hover */
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
+        }
+/* Download CV Button Styling */
+        .download-cv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem; /* More gap */
+            padding: 1.2rem 2.5rem; /* Larger button */
+            background: var(--bs-secondary-bg); /* Darker background */
+            color: var(--bs-body-color);
+            border: 1px solid var(--bs-border-color);
+            border-radius: 10px; /* More rounded */
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem; /* Space from previous button */
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .download-cv-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(59, 130, 246, 0.1); /* Subtle blue overlay */
+            transition: all 0.4s ease-in-out;
+            transform: skewX(-20deg);
+        }
+        .download-cv-btn:hover::before {
+            left: 100%;
+        }
+        .download-cv-btn:hover {
+            background: var(--bs-card-bg); /* Slightly lighter on hover */
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--bs-primary); /* Highlight border */
+            color: var(--bs-primary); /* Highlight text */
+        }
+        .download-cv-btn i {
+            color: var(--bs-primary); /* Icon in accent color */
+            transition: color 0.3s ease;
+        }
+        .download-cv-btn:hover i {
+            color: var(--bs-body-color); /* Icon color change on hover */
+        }
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Start hidden for animation */
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            display: flex;
+            opacity: 1; /* Fade in */
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: #111;
+            border-radius: 1.5rem; /* More rounded */
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+            transform: scale(0.8); /* Start smaller for animation */
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .lightbox.active .lightbox-content {
+            transform: scale(1); /* Scale to full size */
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block; /* Remove extra space below image */
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8); /* Darker caption background */
+            color: white;
+            padding: 1.2rem; /* More padding */
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 15px; /* More space from top */
+            right: 15px; /* More space from right */
+            color: white;
+            background: rgba(0,0,0,0.7); /* Darker background */
+            border: none;
+            font-size: 1.8rem; /* Larger close icon */
+            cursor: pointer;
+            border-radius: 50%;
+            width: 45px; /* Larger button */
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .lightbox-close:hover {
+            background: var(--bs-danger); /* Red on hover */
+            transform: scale(1.1);
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            font-size: 1.5rem;
+            border: none;
+            outline: none;
+            background: linear-gradient(45deg, var(--bs-primary), var(--bs-accent-secondary));
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backToTopBtn:hover {
+            background: linear-gradient(45deg, var(--bs-primary-hover), var(--bs-accent-secondary));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .project-container {
+                grid-template-columns: 1fr; /* Single column layout */
+            }
+            .project-info {
+                position: static; /* Disable sticky on smaller screens */
+                margin-top: 4rem; /* Add spacing below content */
+            }
+            .hero-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-header {
+                padding: 4rem 1.5rem;
+            }
+            .hero-header h1 {
+                font-size: 2.2rem;
+            }
+            .project-container {
+                padding: 3rem 1.5rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr; /* Single column for gallery on small screens */
+                gap: 2rem;
+            }
+            .project-article h2 {
+                font-size: 2rem;
+            }
+            .project-article h3 {
+                font-size: 1.5rem;
+            }
+            .project-info {
+                padding: 2rem;
+            }
+            .info-section h3 {
+                font-size: 1.4rem;
+            }
+            .demo-button {
+                padding: 1rem 2rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero-header h1 {
+                font-size: 1.8rem;
+            }
+            .project-tag {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .project-container {
+                padding: 2rem 1rem;
+            }
+            .gallery-item-container {
+                padding: 1rem;
+            }
+            .project-article p {
+                font-size: 1rem;
+            }
+            .feature-list li {
+                font-size: 0.95rem;
+            }
+            .project-info {
+                padding: 1.5rem;
+            }
+            .info-section h3 {
+                font-size: 1.2rem;
+            }
+            .tech-item {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            .demo-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            #backToTopBtn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="hero-header">
-    <h1>Exam Portal</h1>
-    <div class="project-tag">Comprehensive Exam Management System</div>
-  </header>
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar"></div>
 
-  <main class="project-container">
-    <div class="project-content">
-      <div class="gallery-grid">
-        <!-- Exam Portal Dashboard -->
-        <div class="gallery-item-container">
-          <div class="gallery-item" onclick="openLightbox('/img/Project2_1.png')">
-            <img src="/img/Project2_1.png" alt="Student Take Exam">
-          </div>
-          <span class="gallery-caption">Student Take Exam</span>
+    <!-- Header (Compact Hero Section) -->
+    <header class="hero-header" data-aos="fade-down" data-aos-duration="1000">
+        <div class="container">
+            <h1>Exam Portal</h1>
+            <div class="project-tag" data-aos="zoom-in" data-aos-delay="300">Comprehensive Exam Management System</div>
         </div>
-        <!-- Exam Scheduling Interface -->
-        <div class="gallery-item-container">
-          <div class="gallery-item" onclick="openLightbox('/img/Project2_2.png')">
-            <img src="/img/Project2_2.png" alt="Teacher Create Exam">
-          </div>
-          <span class="gallery-caption">Teacher Create Exam</span>
-        </div>
-        <!-- Real-time Exam Monitoring -->
-        <div class="gallery-item-container">
-          <div class="gallery-item" onclick="openLightbox('/img/Project2_3.png')">
-            <img src="/img/Project2_3.png" alt="Student Exam Result Page">
-          </div>
-          <span class="gallery-caption">Student Exam Result Page</span>
-        </div>
-        <!-- User Results Page -->
-        <div class="gallery-item-container">
-          <div class="gallery-item" onclick="openLightbox('/img/Project2_4.png')">
-            <img src="/img/Project2_4.png" alt="Teacher Create Exam">
-          </div>
-          <span class="gallery-caption">Teacher Create Exam</span>
-        </div>
-      </div>
+    </header>
 
-      <article class="project-article">
-        <h2>Revolutionizing Exam Management</h2>
-        <p>
-          Exam Portal is a comprehensive exam management system designed for students, teachers, and administrators.
-          The application streamlines the entire examination process—from scheduling exams and monitoring real-time exam progress,
-          to viewing detailed results and performance analytics. Its intuitive design ensures a seamless experience for all users.
-        </p>
-        <p>
-          Users can log in to access role-based features.
-        </p>
-        <p>
-          Additionally, the portal provides detailed analytics on exam performance, and integrates a feedback mechanism for users to report issues or suggest improvements.
-        </p>
+    <main class="project-container row g-5">
+        <!-- Project Content Section -->
+        <div class="col-lg-8 project-content">
+            <div class="gallery-grid">
+                <!-- Exam Portal Dashboard -->
+                <div class="gallery-item-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="gallery-item" onclick="openLightbox('img/Project2_1.png', 'Student Take Exam Interface')">
+                        <img src="img/Project2_1.png" alt="Student Take Exam">
+                    </div>
+                    <span class="gallery-caption">Student Take Exam</span>
+                </div>
+                <!-- Exam Scheduling Interface -->
+                <div class="gallery-item-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="gallery-item" onclick="openLightbox('img/Project2_2.png', 'Teacher Create Exam Interface')">
+                        <img src="img/Project2_2.png" alt="Teacher Create Exam">
+                    </div>
+                    <span class="gallery-caption">Teacher Create Exam</span>
+                </div>
+                <!-- Real-time Exam Monitoring -->
+                <div class="gallery-item-container" data-aos="fade-up" data-aos-delay="300">
+                    <div class="gallery-item" onclick="openLightbox('img/Project2_3.png', 'Student Exam Result Page')">
+                        <img src="img/Project2_3.png" alt="Student Exam Result Page">
+                    </div>
+                    <span class="gallery-caption">Student Exam Result Page</span>
+                </div>
+                <!-- User Results Page -->
+                <div class="gallery-item-container" data-aos="fade-up" data-aos-delay="400">
+                    <div class="gallery-item" onclick="openLightbox('img/Project2_4.png', 'Teacher Exam Management View')">
+                        <img src="img/Project2_4.png" alt="Teacher Create Exam">
+                    </div>
+                    <span class="gallery-caption">Teacher Create Exam</span>
+                </div>
+            </div>
+
+            <article class="project-article" data-aos="fade-up" data-aos-duration="1000">
+                <h2>Revolutionizing Exam Management</h2>
+                <p>
+                    Exam Portal is a comprehensive exam management system designed for students, teachers, and administrators.
+                    The application streamlines the entire examination process—from scheduling exams and monitoring real-time exam progress,
+                    to viewing detailed results and performance analytics. Its intuitive design ensures a seamless experience for all users.
+                </p>
+                <p>
+                    Users can log in to access role-based features. Teachers can create, manage, and publish exams, defining question types, time limits, and grading criteria. Students can browse available exams, take them securely, and immediately view their results upon submission. Administrators have oversight over all users, exams, and system configurations.
+                </p>
+                <p>
+                    Additionally, the portal provides detailed analytics on exam performance, allowing teachers to identify areas where students might struggle and providing valuable insights for curriculum improvement. It also integrates a feedback mechanism for users to report issues or suggest improvements, fostering a collaborative environment for continuous enhancement of the platform.
+                </p>
+                
+                <h3>Key Features</h3>
+                <ul class="feature-list">
+                    <li>User authentication and role-based access for students, teachers, and administrators</li>
+                    <li>Comprehensive exam scheduling and real-time monitoring capabilities</li>
+                    <li>Dynamic display of exam results and in-depth performance analytics</li>
+                    <li>Secure and efficient data handling with SQL Server backend</li>
+                    <li>Integrated feedback and query management system for continuous improvement</li>
+                </ul>
+
+                <h3>Technical Implementation</h3>
+                <p>
+                    Built on a robust architecture, the Exam Portal utilizes React for a dynamic and responsive frontend,
+                    providing a smooth and interactive user interface. Node.js with Express.js powers the scalable backend services,
+                    handling API requests, user authentication, and business logic efficiently. SQL Server is employed for robust and
+                    efficient data management, ensuring data integrity and quick access. The system leverages real-time
+                    communication and notification services to provide an interactive user experience, while ensuring data integrity and security
+                    through best practices in web development.
+                </p>
+            </article>
+        </div>
+
+        <!-- Sidebar / Project Info Section -->
+        <aside class="col-lg-4 project-info" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-section">
+                <h3><i class="fas fa-tools"></i> Tech Stack</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <i class="fab fa-react"></i> React
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-node-js"></i> Node.js
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-server"></i> Express.js
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i> SQL Server
+                    </div>
+                </div>
+            </div>
         
-        <h3>Key Features</h3>
-        <ul class="feature-list">
-          <li>User authentication and role-based access</li>
-          <li>Exam scheduling and real-time monitoring</li>
-          <li>Dynamic display of exam results and performance analytics</li>
-          <li>Secure data handling with SQL Server</li>
-          <li>Integrated feedback and query management system</li>
-        </ul>
+            <div class="info-section">
+                <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                <p class="text-secondary">Currently under continuous development – stay tuned for upcoming milestones and improvements, including advanced AI-powered analytics and gamification features!</p>
+            </div>
+        
+            <div class="info-section">
+                <h3><i class="fas fa-external-link-alt"></i> Project Links</h3>
+                <!-- Launch Demo Button - now triggers a modal -->
+                <button type="button" class="demo-button mb-3" id="demoBtn">
+                    <i class="fas fa-rocket"></i> Launch Live Demo
+                </button>
+                <!-- Download CV Button -->
+                <a href="img/YoginManiya_Resume.pdf" class="download-cv-btn" download>
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+                <!-- Back to Home Button -->
+                <button type="button" class="demo-button mt-3" id="homeBtn">
+                    <i class="fas fa-home"></i> Back to Home
+                </button>
+            </div>
+        </aside>
+    </main>
 
-        <h3>Technical Implementation</h3>
-        <p>
-          Built on a robust architecture, the Exam Portal utilizes React for a dynamic and responsive frontend,
-          Node.js for scalable backend services, and SQL Server for efficient data management. The system leverages real-time
-          communication and notification services to provide an interactive user experience, while ensuring data integrity and security.
-        </p>
-      </article>
-    </div>
-
-    <aside class="project-info">
-      <div class="info-section">
-        <h3><i class="fas fa-tools"></i> Tech Stack</h3>
-        <div class="tech-stack">
-          <div class="tech-item">
-            <i class="fab fa-react"></i> React
-          </div>
-          <div class="tech-item">
-            <i class="fab fa-node-js"></i> Node.js
-          </div>
-          <div class="tech-item">
-            <i class="fas fa-database"></i> SQL Server
-          </div>
-        </div>
-      </div>
-    
-      <div class="info-section">
-        <h3><i class="fas fa-trophy"></i> Achievements</h3>
-        <p>Currently under continuous development – stay tuned for upcoming milestones and improvements!</p>
-      </div>
-    
-      <div class="info-section">
-        <h3><i class="fas fa-external-link-alt"></i> Live Demo</h3>
-        <!-- Launch Demo Button -->
-        <div class="demo-button" id="demoBtn">
-          <i class="fas fa-rocket"></i> Launch Demo
-        </div>
-        <!-- Download CV Button -->
-        <a href="/img/YoginManiya_Resume.pdf" class="download-cv-btn" download>
-          <i class="fas fa-download"></i> Download CV
-        </a>
-        <!-- Gap between buttons -->
-        <div style="margin-top: 1rem;">
-          <div class="demo-button" id="homeBtn">
-            <i class="fas fa-home"></i> Back to home
-          </div>
-        </div>
-      </div>
-      
-    </aside>
-  </main>
-
-  <!-- Lightbox Modal for Gallery Images -->
+    <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
       <button class="lightbox-close" onclick="closeLightbox()">
         <i class="fas fa-times"></i>
       </button>
-      <img class="lightbox-img" id="lightboxImage" alt="Enlarged view">
+      <img class="lightbox-img" id="lightboxImage" alt="Enlarged view" />
       <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
 
-  <!-- Popup Modal for Live Demo (Under Construction Message) -->
-  <div class="popup-modal" id="demoModal">
-    <div class="popup-content">
-      <button class="popup-close" onclick="closeDemoModal()">
-        <i class="fas fa-times"></i>
-      </button>
+  <!-- Live Demo Modal -->
+  <div class="popup-modal" id="demoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; color: white;">
+    <div class="popup-content" style="text-align: center; padding: 2rem; background: #111; border-radius: 1rem; position: relative;">
+      <button class="popup-close" onclick="closeDemoModal()" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.5rem; color: white;"><i class="fas fa-times"></i></button>
       <h2>Under Construction</h2>
-      <p>Sorry, this site is currently under construction.</p>
-      <!-- Replace the image URL with your preferred GIF or image -->
-      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExejF4MjQybW1wcmoyMmRvbjF3eWQzbG9rOHlwcnlkejl6b202aWkwZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vR1dPIYzQmkRzLZk2w/giphy.gif" alt="Under Construction">
+      <p>This demo is currently under construction. Please check back later!</p>
+      <img src="https://media.giphy.com/media/vR1dPIYzQmkRzLZk2w/giphy.gif" alt="Under Construction" style="max-width: 300px; margin-top: 1rem;" />
     </div>
   </div>
 
-  <script>
-    // Lightbox functions for gallery images
-    function openLightbox(src) {
+    <!-- Back to Top Button -->
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap 5.3 JS Bundle (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- AOS (Animate On Scroll) JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+      duration: 1200,
+      once: true,
+      offset: 150,
+      easing: 'ease-out-cubic'
+    });
+
+    function openLightbox(src, captionText) {
       const lightbox = document.getElementById('lightbox');
-      const img = document.getElementById('lightboxImage');
-      const caption = document.getElementById('lightboxCaption');
-      img.src = src;
-      caption.textContent = event.target.alt;
+      document.getElementById('lightboxImage').src = src;
+      document.getElementById('lightboxCaption').textContent = captionText;
       lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
+
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
     }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeLightbox();
@@ -498,18 +759,42 @@
       }
     });
 
-    // Popup Modal functions for Live Demo button
-    const demoBtn = document.getElementById('demoBtn');
-    demoBtn.addEventListener('click', function() {
-      document.getElementById('demoModal').classList.add('active');
+    document.getElementById('demoBtn')?.addEventListener('click', function () {
+      document.getElementById('demoModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
+
     function closeDemoModal() {
-      document.getElementById('demoModal').classList.remove('active');
+      document.getElementById('demoModal').style.display = 'none';
+      document.body.style.overflow = '';
     }
-    // JavaScript for the Back to Home button
-    document.getElementById('homeBtn').addEventListener('click', function() {
-      window.location.href = "index.html#projects"; // This will open the project section on the index page
+
+    document.getElementById('homeBtn')?.addEventListener('click', function () {
+      window.location.href = "index.html#projects";
     });
-  </script>
+
+    const progressBar = document.getElementById("progressBar");
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      progressBar.style.width = scrolled + "%";
+
+      if (scrollTop > 300) {
+        backToTopBtn.style.display = "flex";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    }
+window.addEventListener("scroll", scrollFunction);
+
+    </script>
 </body>
 </html>
