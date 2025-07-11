@@ -1,742 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yogin Maniya - Web Developer</title>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <!-- SweetAlert2 CDN -->
-    <!-- Font Awesome for icons -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yogin Maniya - Web Developer</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon"> <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    /* Existing styles */
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 8px 16px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 500;
-      position: relative;
-      z-index: 1;
-    }
-    .project-link.view-detail {
-      color: #fff;
-      background: #2A2A2A;
-      border: 2px solid transparent;
-      overflow: hidden;
-    }
-    .project-link.view-detail::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-      z-index: -1;
-      filter: blur(5px);
-      opacity: 1;
-      background-size: 400%;
-      animation: glowing 5s infinite;
-    }
-    @keyframes glowing {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    /* Basic styling for the filter buttons */
-    .filter-buttons {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .filter-btn {
-      padding: 10px 20px;
-      margin: 0 10px;
-      border: none;
-      background-color: #eee;
-      color: #333;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      border-radius: 4px;
-    }
-    .filter-btn:hover,
-    .filter-btn.active {
-      background-color: #333;
-      color: #fff;
-    }
-  </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container">
-      <div class="profile-img fade-in">
-        <div class="profile-ring"></div>
-        <img src="/img/My.jpg" alt="Profile" />
-      </div>
-      <h1 class="glitch" data-text="John Doe">Yogin Maniya</h1>
-      <h2 class="slide-up delay-1">Full Stack Web Developer</h2>
-      <p class="hero-text slide-up delay-2">
-        Build exceptional digital experiences that are fast, accessible, and visually appealing.
-      </p>
-      <div class="social-links slide-up delay-3">
-        <a href="https://github.com/Yogin-Maniya" class="icon-link" target="_blank" rel="noopener noreferrer">
-          <i data-lucide="github"></i>
-        </a>
-        <a href="https://linkedin.com/in/maniya-yogin" class="icon-link" target="_blank" rel="noopener noreferrer">
-          <i data-lucide="linkedin"></i>
-        </a>
-        <a href="mailto:yoginmaniya76@gmail.com" class="icon-link">
-          <i data-lucide="mail"></i>
-        </a>
-      </div>
-      <div class="cta-buttons slide-up delay-4">
-        <a href="#contact" class="primary-btn">
-          <span>Get in Touch</span>
-          <i data-lucide="arrow-right"></i>
-        </a>
-        <a href="#projects" class="secondary-btn">
-          <span>View Work</span>
-          <i data-lucide="briefcase"></i>
-        </a>
-        <a href="/img/YoginManiya_Resume.pdf" class="download-btn primary-btn" download>
-          <span>Download CV</span>
-          <i data-lucide="download"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about" data-aos="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-icon-wrapper">
-          <i data-lucide="user" class="section-icon"></i>
-        </div>
-        <h2>About Me</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="about-grid">
-        <div class="about-content">
-          <p class="about-text">
-            I'm a passionate full-stack developer currently in my third year pursuing a B.Tech degree.
-            I am dedicated to learning and exploring modern web technologies, and I continuously work on
-            hands-on projects that address real-world challenges. My journey as a student fuels my drive
-            to build innovative, user-friendly applications.
-          </p>
-          <div class="experience-grid">
-            <div class="experience-card" data-aos="flip-left">
-              <div class="experience-icon">
-                <i data-lucide="code-2"></i>
-              </div>
-              <div class="experience-content">
-                <h3>4th Year</h3>
-                <p>B.Tech Student</p>
-              </div>
-            </div>
-            <div class="experience-card" data-aos="flip-right">
-              <div class="experience-icon">
-                <i data-lucide="briefcase"></i>
-              </div>
-              <div class="experience-content">
-                <h3>3+ Projects</h3>
-                <p>Completed</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="about-image" data-aos="fade-left">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Working" />
-          <div class="image-overlay"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section id="skills" class="skills" data-aos="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-icon-wrapper">
-          <i data-lucide="code-2" class="section-icon"></i>
-        </div>
-        <h2>Skills & Expertise</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="skills-container">
-        <div class="skill-category" data-aos="zoom-in">
-          <h3>Programming Languages</h3>
-          <div class="skill-bars">
-            <div class="skill-bar">
-              <div class="skill-info">
-                <span class="skill-name">Java</span>
-                <span class="skill-percentage">85%</span>
-              </div>
-              <div class="bar">
-                <div class="progress" style="width: 85%;" data-percent="85%"></div>
-              </div>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-info">
-                <span class="skill-name">C#</span>
-                <span class="skill-percentage">80%</span>
-              </div>
-              <div class="bar">
-                <div class="progress" style="width: 80%;" data-percent="80%"></div>
-              </div>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-info">
-                <span class="skill-name">Python</span>
-                <span class="skill-percentage">80%</span>
-              </div>
-              <div class="bar">
-                <div class="progress" style="width: 80%;" data-percent="80%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="skill-category" data-aos="zoom-in" data-aos-delay="100">
-          <h3>Technologies & Tools</h3>
-          <div class="tech-grid">
-            <div class="tech-item" data-aos="fade-up">
-              <div class="tech-icon">
-                <i data-lucide="code"></i>
-              </div>
-              <span>ASP .NET Core</span>
-              <div class="tech-level">Expert</div>
-            </div>
-            <div class="tech-item" data-aos="fade-up" data-aos-delay="100">
-              <div class="tech-icon">
-                <i data-lucide="database"></i>
-              </div>
-              <span>SQL</span>
-              <div class="tech-level">Expert</div>
-            </div>
-            <div class="tech-item" data-aos="fade-up" data-aos-delay="200">
-              <div class="tech-icon">
-                <i data-lucide="server"></i>
-              </div>
-              <span>Node.js</span>
-              <div class="tech-level">Intermediate</div>
-            </div>
-            <div class="tech-item" data-aos="fade-up" data-aos-delay="300">
-              <div class="tech-icon">
-                <i data-lucide="component"></i>
-              </div>
-              <span>React</span>
-              <div class="tech-level">Intermediate</div>
-            </div>
-            <div class="tech-item" data-aos="fade-up" data-aos-delay="400">
-              <div class="tech-icon">
-                <i data-lucide="smartphone"></i>
-              </div>
-              <span>Flutter</span>
-              <div class="tech-level">Advanced</div>
-            </div>
-            <div class="tech-item" data-aos="fade-up" data-aos-delay="500">
-              <div class="tech-icon">
-                <i data-lucide="layers"></i>
-              </div>
-              <span>Angular</span>
-              <div class="tech-level">Advanced</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="projects" data-aos="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-icon-wrapper">
-          <i data-lucide="briefcase" class="section-icon"></i>
-        </div>
-        <h2>Featured Projects</h2>
-        <div class="section-line"></div>
-      </div>
-      <!-- Filter Buttons -->
-      <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="app">App</button>
-      </div>
-      <!-- Projects Grid -->
-      <div class="projects-grid">
-        <!-- Web Project Card -->
-        <div class="project-card web" data-category="web" data-aos="fade-up">
-          <div class="project-image">
-            <img src="/img/Project1.png" alt="RMTS" />
-            <div class="project-overlay">
-              <div class="project-details">
-                <h4>Technologies Used</h4>
-                <div class="tech-tags">
-                  <span>ASP .NET</span>
-                  <span>SQL</span>
+    <main>
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="profile-img fade-in">
+                    <div class="profile-ring"></div>
+                    <img src="/img/My.jpg" alt="Profile of Yogin Maniya" />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-content">
-            <h3>RMTS WEB</h3>
-            <p>
-              A platform providing real-time bus schedules, route maps, and nearby stop info for Rajkot Mass Transport Service, built with ASP.NET and SQL Server.
-            </p>
-            <div class="project-links">
-              <a href="https://rmts.somee.com" class="project-link view-detail" target="_blank" rel="noopener noreferrer">
-                <i data-lucide="external-link"></i>
-                <span>Live Demo</span>
-              </a>
-              <a href="project-details.html" class="project-link view-detail">
-                <i data-lucide="external-link"></i>
-                <span>Project Details</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Web Project Card -->
-        <div class="project-card web" data-category="web" data-aos="fade-up">
-          <div class="project-image">
-            <img src="/img/Project2_1.png" alt="Exam Portal" />
-            <div class="project-overlay">
-              <div class="project-details">
-                <h4>Technologies Used</h4>
-                <div class="tech-tags">
-                  <span>React</span>
-                  <span>Node.js</span>
-                  <span>SQL</span>
+                <h1  data-text="Yogin Maniya">Yogin Maniya</h1>
+                <h2 class="slide-up delay-1">Full Stack Web Developer</h2>
+                <p class="hero-text slide-up delay-2">
+                    I build exceptional digital experiences that are fast, accessible, and visually appealing.
+                </p>
+                <div class="social-links slide-up delay-3">
+                    <a href="https://github.com/Yogin-Maniya" class="icon-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/maniya-yogin" class="icon-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="mailto:yoginmaniya76@gmail.com" class="icon-link" aria-label="Send an email">
+                        <i data-lucide="mail"></i>
+                    </a>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-content">
-            <h3>Exam Portal</h3>
-            <p>
-              A comprehensive exam management platform for students, teachers, and admins. Built using React for
-              the frontend, Node.js for the backend, and SQL for database management.
-            </p>
-            <div class="project-links">
-              <a href="project-details2.html" class="project-link view-detail">
-                <i data-lucide="external-link"></i>
-                <span>Project Details</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- App Project Card (Flutter UI) -->
-        <div class="project-card app" data-category="app" data-aos="fade-up" data-aos-delay="200">
-          <div class="project-image">
-            <img src="/img/Project3_2(1).png" alt="Flutter App UI" />
-            <div class="project-overlay">
-              <div class="project-details">
-                <h4>Technologies Used</h4>
-                <div class="tech-tags">
-                  <span>Flutter</span>
-                  <span>Dart</span>
-                  <span>UI Design</span>
+                <div class="cta-buttons slide-up delay-4">
+                    <a href="#contact" class="primary-btn">
+                        <span>Get in Touch</span>
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                    <a href="#projects" class="secondary-btn">
+                        <span>View Work</span>
+                        <i data-lucide="briefcase"></i>
+                    </a>
+                    <a href="/img/YoginManiya_Resume.pdf" class="primary-btn download-btn" download aria-label="Download Resume">
+                        <span>Download CV</span>
+                        <i data-lucide="download"></i>
+                    </a>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="project-content">
-            <h3>Flutter App UI</h3>
-            <p>
-              A visually appealing and responsive user interface crafted with Flutter, showcasing modern design principles
-              and smooth interactions.
-            </p>
-            <div class="project-links">
-              <a href="project-details3.html" class="project-link view-detail">
-                <i data-lucide="external-link"></i>
-                <span>Project Details</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- App Project Card (RMTS App: Flutter, .NET, SQL) -->
-        <div class="project-card app" data-category="app" data-aos="fade-up" data-aos-delay="300">
-          <div class="project-image">
-            <img src="/img/Project4_1.jpg" alt="RMTS App (Flutter &amp; .NET)" />
-            <div class="project-overlay">
-              <div class="project-details">
-                <h4>Technologies Used</h4>
-                <div class="tech-tags">
-                  <span>Flutter</span>
-                  <span>ASP .NET</span>
-                  <span>SQL</span>
+        </section>
+
+        <section id="about" class="about" data-aos="fade-up">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-icon-wrapper">
+                        <i data-lucide="user" class="section-icon"></i>
+                    </div>
+                    <h2>About Me</h2>
+                    <div class="section-line"></div>
                 </div>
-              </div>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p class="about-text">
+                            I'm a passionate full-stack developer currently in my fourth year pursuing a B.Tech degree.
+                            I am dedicated to learning and exploring modern web technologies, and I continuously work on
+                            hands-on projects that address real-world challenges. My journey as a student fuels my drive
+                            to build innovative, user-friendly applications.
+                        </p>
+                        <div class="experience-grid">
+                            <div class="experience-card" data-aos="flip-left">
+                                <div class="experience-icon">
+                                    <i data-lucide="graduation-cap"></i>
+                                </div>
+                                <div class="experience-content">
+                                    <h3>4th Year</h3>
+                                    <p>B.Tech Student</p>
+                                </div>
+                            </div>
+                            <div class="experience-card" data-aos="flip-right">
+                                <div class="experience-icon">
+                                    <i data-lucide="briefcase"></i>
+                                </div>
+                                <div class="experience-content">
+                                    <h3>3+ Projects</h3>
+                                    <p>Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image" data-aos="fade-left">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Developer working on a laptop" />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="project-content">
-            <h3>RMTS App</h3>
-            <p>
-              A dynamic transit solution with a Flutter frontend, ASP.NET backend, and SQL database—delivering sleek UI and robust performance.
-            </p>
-            <div class="project-links">
-              <a href="project-details4.html" class="project-link view-detail">
-                <i data-lucide="external-link"></i>
-                <span>Project Details</span>
-              </a>
+        </section>
+
+        <section id="skills" class="skills" data-aos="fade-up">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-icon-wrapper">
+                        <i data-lucide="code-2" class="section-icon"></i>
+                    </div>
+                    <h2>Skills & Expertise</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-category" data-aos="zoom-in">
+                        <h3>Programming Languages</h3>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <div class="skill-info">
+                                    <span class="skill-name">Java</span>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="progress" style="width: 0;" data-percent="85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-info">
+                                    <span class="skill-name">C#</span>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="progress" style="width: 0;" data-percent="80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-info">
+                                    <span class="skill-name">Python</span>
+                                    <span class="skill-percentage">80%</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="progress" style="width: 0;" data-percent="80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>Technologies & Tools</h3>
+                        <div class="tech-grid">
+                            <div class="tech-item" data-aos="fade-up">
+                                <div class="tech-icon">
+                                    <i data-lucide="code"></i>
+                                </div>
+                                <span>ASP .NET Core</span>
+                                <div class="tech-level">Expert</div>
+                            </div>
+                            <div class="tech-item" data-aos="fade-up" data-aos-delay="100">
+                                <div class="tech-icon">
+                                    <i data-lucide="database"></i>
+                                </div>
+                                <span>SQL</span>
+                                <div class="tech-level">Expert</div>
+                            </div>
+                            <div class="tech-item" data-aos="fade-up" data-aos-delay="200">
+                                <div class="tech-icon">
+                                    <i data-lucide="server"></i>
+                                </div>
+                                <span>Node.js</span>
+                                <div class="tech-level">Intermediate</div>
+                            </div>
+                            <div class="tech-item" data-aos="fade-up" data-aos-delay="300">
+                                <div class="tech-icon">
+                                    <i data-lucide="component"></i>
+                                </div>
+                                <span>React</span>
+                                <div class="tech-level">Intermediate</div>
+                            </div>
+                            <div class="tech-item" data-aos="fade-up" data-aos-delay="400">
+                                <div class="tech-icon">
+                                    <i data-lucide="smartphone"></i>
+                                </div>
+                                <span>Flutter</span>
+                                <div class="tech-level">Advanced</div>
+                            </div>
+                            <div class="tech-item" data-aos="fade-up" data-aos-delay="500">
+                                <div class="tech-icon">
+                                    <i data-lucide="layers"></i>
+                                </div>
+                                <span>Angular</span>
+                                <div class="tech-level">Advanced</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+        </section>
+
+        <section id="projects" class="projects" data-aos="fade-up">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-icon-wrapper">
+                        <i data-lucide="briefcase" class="section-icon"></i>
+                    </div>
+                    <h2>Featured Projects</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="app">App</button>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card web" data-category="web" data-aos="fade-up">
+                        <div class="project-image">
+                            <img src="/img/Project1.png" alt="RMTS Web Application Screenshot" />
+                            <div class="project-overlay">
+                                <div class="project-details">
+                                    <h4>Technologies Used</h4>
+                                    <div class="tech-tags">
+                                        <span>ASP .NET</span>
+                                        <span>SQL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>RMTS Web</h3>
+                            <p>
+                                A platform providing real-time bus schedules, route maps, and nearby stop info for Rajkot Mass Transport Service, built with ASP.NET and SQL Server.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://rmts.somee.com" class="project-link live-demo-btn" target="_blank" rel="noopener noreferrer">
+                                    <i data-lucide="external-link"></i>
+                                    <span>Live Demo</span>
+                                </a>
+                                <a href="project-details.html" class="project-link view-detail">
+                                    <i data-lucide="info"></i>
+                                    <span>Details</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card web" data-category="web" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-image">
+                            <img src="/img/Project2_1.png" alt="Exam Portal Web Application Screenshot" />
+                            <div class="project-overlay">
+                                <div class="project-details">
+                                    <h4>Technologies Used</h4>
+                                    <div class="tech-tags">
+                                        <span>React</span>
+                                        <span>Node.js</span>
+                                        <span>SQL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Exam Portal</h3>
+                            <p>
+                                A comprehensive exam management platform for students, teachers, and admins. Built using React for
+                                the frontend, Node.js for the backend, and SQL for database management.
+                            </p>
+                            <div class="project-links">
+                                <a href="project-details2.html" class="project-link view-detail">
+                                    <i data-lucide="info"></i>
+                                    <span>Details</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card app" data-category="app" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-image">
+                            <img src="/img/Project3_2(1).png" alt="Flutter App UI Screenshot" />
+                            <div class="project-overlay">
+                                <div class="project-details">
+                                    <h4>Technologies Used</h4>
+                                    <div class="tech-tags">
+                                        <span>Flutter</span>
+                                        <span>Dart</span>
+                                        <span>UI Design</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Flutter App UI</h3>
+                            <p>
+                                A visually appealing and responsive user interface crafted with Flutter, showcasing modern design principles
+                                and smooth interactions.
+                            </p>
+                            <div class="project-links">
+                                <a href="project-details3.html" class="project-link view-detail">
+                                    <i data-lucide="info"></i>
+                                    <span>Details</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card app" data-category="app" data-aos="fade-up" data-aos-delay="300">
+                        <div class="project-image">
+                            <img src="/img/Project4_1.jpg" alt="RMTS Mobile App Screenshot" />
+                            <div class="project-overlay">
+                                <div class="project-details">
+                                    <h4>Technologies Used</h4>
+                                    <div class="tech-tags">
+                                        <span>Flutter</span>
+                                        <span>ASP .NET</span>
+                                        <span>SQL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>RMTS Mobile App</h3>
+                            <p>
+                                A dynamic transit solution with a Flutter frontend, ASP.NET backend, and SQL database—delivering sleek UI and robust performance.
+                            </p>
+                            <div class="project-links">
+                                <a href="project-details4.html" class="project-link view-detail">
+                                    <i data-lucide="info"></i>
+                                    <span>Details</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="location" class="location" data-aos="fade-up">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-icon-wrapper">
+                        <i data-lucide="map-pin" class="section-icon"></i>
+                    </div>
+                    <h2>Location</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="location-grid">
+                    <div class="address-card" data-aos="fade-right">
+                        <div class="address-header">
+                            <div class="address-icon-wrapper">
+                                <i data-lucide="building" class="address-icon"></i>
+                            </div>
+                            <h3>Current Address</h3>
+                        </div>
+                        <div class="address-content">
+                            <p>Darshan University</p>
+                            <p>Rajkot</p>
+                            <p>Gujarat, India</p>
+                            <p>ZIP: 360001</p>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i data-lucide="phone"></i>
+                                <span>+91 8980905071</span>
+                            </div>
+                            <div class="contact-item">
+                                <i data-lucide="mail"></i>
+                                <span>yoginmaniya76@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map-container" data-aos="fade-left">
+                        <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118014.61593692903!2d70.6322789972656!3d22.430653700000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c7a3ba783351%3A0x28dc6eea8324e9d2!2sDarshan%20University!5e0!3m2!1sen!2sin!4v1752212349853!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            width="100%"
+                            height="400"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            aria-label="Google Map of Darshan University, Rajkot, Gujarat, India"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact" data-aos="fade-up">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-icon-wrapper">
+                        <i data-lucide="message-square" class="section-icon"></i>
+                    </div>
+                    <h2>Get in Touch</h2>
+                    <div class="section-line"></div>
+                </div>
+                <form id="contactForm" action="https://formspree.io/f/mnnpzekp" method="POST" class="contact-form" data-aos="zoom-in">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name" />
+                            <div class="form-focus-border"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" />
+                            <div class="form-focus-border"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="Regarding a Project / Collaboration" />
+                        <div class="form-focus-border"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Your detailed message..."></textarea>
+                        <div class="form-focus-border"></div>
+                    </div>
+                    <input type="hidden" name="submitted_at" id="submitted_at" />
+                    <input type="hidden" name="location" id="location" />
+                    <button type="submit" class="submit-btn">
+                        <span>Send Message</span>
+                        <i data-lucide="send"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <div id="progressBar" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background: linear-gradient(to right, #007bff, #00c6ff);
+        width: 0%;
+        z-index: 9999;">
     </div>
-  </section>
 
-  <!-- Location Section -->
-  <section id="location" class="location" data-aos="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-icon-wrapper">
-          <i data-lucide="map-pin" class="section-icon"></i>
-        </div>
-        <h2>Location</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="location-grid">
-        <div class="address-card" data-aos="fade-right">
-          <div class="address-header">
-            <div class="address-icon-wrapper">
-              <i data-lucide="building" class="address-icon"></i>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Yogin Maniya</h3>
+                    <p>Full Stack Web Developer</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Yogin-Maniya" class="icon-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                            <i data-lucide="github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/maniya-yogin" class="icon-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="mailto:yoginmaniya76@gmail.com" class="icon-link" aria-label="Send an email">
+                            <i data-lucide="mail"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>
+                            <i data-lucide="map-pin"></i>
+                            <span>Bhavnagar, Gujarat</span>
+                        </li>
+                        <li>
+                            <i data-lucide="mail"></i>
+                            <span>yoginmaniya76@gmail.com</span>
+                        </li>
+                        <li>
+                            <i data-lucide="phone"></i>
+                            <span>+91 8980905071</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <h3>Current Address</h3>
-          </div>
-          <div class="address-content">
-            <p>Darshan University</p>
-            <p>Rajkot</p>
-            <p>Gujarat, India</p>
-            <p>ZIP: 360001</p>
-          </div>
-          <div class="contact-info">
-            <div class="contact-item">
-              <i data-lucide="phone"></i>
-              <span>+91 8980905071</span>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yogin Maniya. All rights reserved.</p>
             </div>
-            <div class="contact-item">
-              <i data-lucide="mail"></i>
-              <span>yoginmaniya76@gmail.com</span>
-            </div>
-          </div>
         </div>
-        <div class="map-container" data-aos="fade-left">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29503.857552300993!2d70.77888!3d22.429696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c7a3ba783351%3A0x28dc6eea8324e9d2!2sDarshan%20University!5e0!3m2!1sen!2sin!4v1742906219951!5m2!1sen!2sin"
-            width="100%"
-            height="400"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact" data-aos="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-icon-wrapper">
-          <i data-lucide="message-square" class="section-icon"></i>
-        </div>
-        <h2>Get in Touch</h2>
-        <div class="section-line"></div>
-      </div>
-      <!-- AJAX form using SweetAlert2 for loading & response messages -->
-      <form id="contactForm" action="https://formspree.io/f/mnnpzekp" method="POST" class="contact-form" data-aos="zoom-in">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required />
-            <div class="form-focus-border"></div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
-            <div class="form-focus-border"></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" required />
-          <div class="form-focus-border"></div>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
-          <div class="form-focus-border"></div>
-        </div>
-        <!-- Hidden fields for date/time and location -->
-        <input type="hidden" name="submitted_at" id="submitted_at" />
-        <input type="hidden" name="location" id="location" />
-        <button type="submit" class="submit-btn">
-          <span>Send Message</span>
-          <i data-lucide="send"></i>
-        </button>
-      </form>
-    </div>
-  </section>
-<!-- Back to Top Button -->
-<button onclick="topFunction()" id="backToTopBtn" title="Go to top">
-  <i class="fas fa-arrow-up"></i>
-</button>
-<div id="progressBar" style="
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 5px;
-  background: linear-gradient(to right, #007bff, #00c6ff);
-  width: 0%;
-  z-index: 9999;">
-</div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Yogin Maniya</h3>
-          <p>Full Stack Web Developer</p>
-          <div class="social-links">
-            <a href="https://github.com/Yogin-Maniya" class="icon-link">
-              <i data-lucide="github"></i>
-            </a>
-            <a href="https://linkedin.com/in/maniya-yogin" class="icon-link">
-              <i data-lucide="linkedin"></i>
-            </a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Contact Info</h3>
-          <ul>
-            <li>
-              <i data-lucide="map-pin"></i>
-              <span>Bhavnagar, Gujarat</span>
-            </li>
-            <li>
-              <i data-lucide="mail"></i>
-              <span>yoginmaniya76@gmail.com</span>
-            </li>
-            <li>
-              <i data-lucide="phone"></i>
-              <span>+91 8980905071</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 Yogin Maniya. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-
-    // Initialize AOS with custom settings
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
-      easing: 'ease-out-cubic'
-    });
-
-    // Enhanced skill bars animation
-    const skillBars = document.querySelectorAll('.skill-bar .progress');
-    const animateSkillBars = () => {
-      skillBars.forEach(bar => {
-        const percent = bar.getAttribute('data-percent');
-        bar.style.width = '0%';
-        setTimeout(() => {
-          bar.style.width = percent;
-        }, 500);
-      });
-    };
-
-    // Trigger skill bars animation when in view
-    const skillsSection = document.querySelector('.skills');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateSkillBars();
-            observer.unobserve(entry.target);
-          }
+        // Initialize AOS with custom settings
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
         });
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(skillsSection);
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
+        // Enhanced skill bars animation
+        const animateSkillBars = () => {
+            const skillsSection = document.getElementById('skills');
+            if (skillsSection) {
+                const skillBars = skillsSection.querySelectorAll('.skill-bar .progress');
+                skillBars.forEach(bar => {
+                    const percent = bar.getAttribute('data-percent');
+                    // Reset width to 0 for re-animation on repeated view
+                    bar.style.width = '0%';
+                    // Use a small timeout to ensure the reset happens before setting new width
+                    setTimeout(() => {
+                        bar.style.width = percent;
+                    }, 50); // Small delay to allow CSS reset to render
+                });
+            }
+        };
+
+        // Observer to trigger skill bars animation when in view
+        const skillsSectionObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        animateSkillBars();
+                        skillsSectionObserver.unobserve(entry.target); // Stop observing after animation
+                    }
+                });
+            },
+            { threshold: 0.5 } // Trigger when 50% of the section is visible
+        );
+        const skillsSectionElement = document.getElementById('skills');
+        if (skillsSectionElement) {
+            skillsSectionObserver.observe(skillsSectionElement);
         }
-      });
-    });
 
-    // Parallax effect for hero background
-    window.addEventListener("scroll", () => {
-      const scrolled = window.pageYOffset;
-      const heroBg = document.querySelector(".hero-bg");
-      heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
-    });
 
-    // Filter Script for Projects
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach((button) => button.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.getAttribute('data-filter');
-        projectCards.forEach((card) => {
-          if (filter === 'all' || card.getAttribute('data-category') === filter) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }
+            });
         });
-      });
-    });
 
-    // Set hidden field values on page load
-    window.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('submitted_at').value = new Date().toISOString();
-
-    if ("permissions" in navigator && "geolocation" in navigator) {
-      navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
-        if (permissionStatus.state === "granted") {
-          // Permission already granted
-          navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
-        } else if (permissionStatus.state === "prompt") {
-          // Ask only if user has not made a choice yet
-          navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
-        } else {
-          // Permission denied
-          setEmptyLocation();
-        }
-      });
-    } else {
-      // Permissions API not supported
-      navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
-    }
-
-    function setLocation(position) {
-      document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
-    }
-
-    function setEmptyLocation() {
-      document.getElementById('location').value = "";
-    }
-  });
-
-    // AJAX form submission using SweetAlert2 with loading indicator
-    const form = document.getElementById("contactForm");
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(form);
-      
-      // Show loading alert
-      Swal.fire({
-        title: 'Please wait...',
-        text: 'Submitting your message',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
-      fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).then(response => {
-        Swal.close(); // Close the loading alert
-        if (response.ok) {
-          form.reset();
-          Swal.fire({
-            icon: 'success',
-            title: 'Message Sent Successfully!',
-            text: 'Thank you for reaching out. I will get back to you soon.',
-            timer: 4000,
-            showConfirmButton: false
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'There was a problem submitting your form.'
-          });
-        }
-      }).catch(error => {
-        Swal.close();
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'There was a problem submitting your form.'
+        // Parallax effect for hero background
+        window.addEventListener("scroll", () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector(".hero-bg");
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
         });
-      });
-    });
-     const backToTopBtn = document.getElementById("backToTopBtn");
 
-    window.onscroll = function () {
-      scrollFunction();
-    };
+        // Filter Script for Projects
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        filterBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach((button) => button.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
 
-    function scrollFunction() {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
-      progressBar.style.width = scrolled + "%";
+                projectCards.forEach((card) => {
+                    // Use CSS display property for filtering
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block'; // Or 'grid'/'flex' depending on parent
+                        setTimeout(() => card.style.opacity = '1', 50); // Small delay for fade in
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300); // Hide after fade out
+                    }
+                });
+            });
+        });
 
-     if (scrollTop > 300) {
-  backToTopBtn.classList.add("show");
-} else {
-  backToTopBtn.classList.remove("show");
-}
+        // Set hidden field values on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('submitted_at').value = new Date().toISOString();
 
-    }
+            if ("permissions" in navigator && "geolocation" in navigator) {
+                navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
+                    if (permissionStatus.state === "granted") {
+                        navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+                    } else if (permissionStatus.state === "prompt") {
+                        navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+                    } else {
+                        setEmptyLocation(); // Permission denied or not available
+                    }
+                });
+            } else {
+                navigator.geolocation.getCurrentPosition(setLocation, setEmptyLocation);
+            }
 
-          // When the user clicks on the button, scroll to the top of the document
+            function setLocation(position) {
+                document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
+            }
+
+            function setEmptyLocation() {
+                document.getElementById('location').value = "Location not available";
+            }
+        });
+
+        // AJAX form submission using SweetAlert2 with loading indicator
+        const form = document.getElementById("contactForm");
+        if (form) {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                Swal.fire({
+                    title: 'Sending message...',
+                    text: 'Please wait a moment.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    Swal.close();
+                    if (response.ok) {
+                        form.reset();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Message Sent Successfully!',
+                            text: 'Thank you for reaching out. I will get back to you soon.',
+                            timer: 4000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'There was a problem submitting your form. Please try again or contact me directly.'
+                        });
+                    }
+                }).catch(error => {
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error',
+                        text: 'Could not connect to the server. Please check your internet connection.'
+                    });
+                });
+            });
+        }
+
+        // Back to Top Button and Progress Bar logic
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        const progressBar = document.getElementById("progressBar");
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+            // Calculate scroll progress for the progress bar
+            if (scrollHeight > clientHeight) { // Avoid division by zero if content is short
+                const scrolledPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+                progressBar.style.width = scrolledPercentage + "%";
+            } else {
+                progressBar.style.width = "0%"; // No scroll needed
+            }
+
+            // Show/hide back to top button
+            if (scrollTop > 300) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
         function topFunction() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth' // Smooth scroll to top
+                behavior: 'smooth'
             });
         }
-  </script>
+    </script>
 </body>
 </html>
