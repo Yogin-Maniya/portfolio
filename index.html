@@ -451,9 +451,16 @@
   <div class="g-recaptcha" data-sitekey="6LfILX8rAAAAAEt6h-YbSq0xtXDe6cX94tqI5tWi"></div>
   <br />
 
-  <input type="hidden" name="submitted_at" id="submitted_at" />
   <input type="hidden" name="ip" id="form_ip">
-          <input type="hidden" name="location" id="form_location">
+<input type="hidden" name="ip_lat" id="form_ip_lat">
+<input type="hidden" name="ip_lon" id="form_ip_lon">
+<input type="hidden" name="ip_address" id="form_ip_address">
+
+<input type="hidden" name="precise_lat" id="form_precise_lat">
+<input type="hidden" name="precise_lon" id="form_precise_lon">
+<input type="hidden" name="precise_address" id="form_precise_address">
+
+<input type="hidden" name="submitted_at" id="submitted_at">
 
   <button type="submit" class="submit-btn">
     <span>Send Message</span>
@@ -534,9 +541,6 @@
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-    const IPAPI_URL = 'https://ipapi.co/json/';
-    const FORMSPREE_ONLOAD_URL = 'https://formspree.io/f/mzzvzqwa';
-    const FORMSPREE_CONTACT_URL = 'https://formspree.io/f/mnnpzekp';
 
         // Initialize Lucide icons
         lucide.createIcons();
@@ -629,82 +633,6 @@
             });
         });
 
-        
-    let visitorIP = '';
-    let visitorLoc = '';
-
-    async function fetchIpLocation() {
-      try {
-        let res = await fetch(IPAPI_URL);
-        let data = await res.json();
-        visitorIP = data.ip || '';
-        visitorLoc = (data.city + ', ' + data.region + ', ' + data.country_name) || '';
-      } catch (e) {
-        console.error('IP Geolocation failed', e);
-      }
-    }
-
-    async function sendOnLoad() {
-      await fetchIpLocation();
-      if (!visitorIP && !visitorLoc) return;
-
-      let formData = new FormData();
-      formData.append('ip', visitorIP);
-      formData.append('location', visitorLoc);
-
-      fetch(FORMSPREE_ONLOAD_URL, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).catch(e => console.error('On-load Formspree error', e));
-    }
-
-    async function handleSubmit(e) {
-      e.preventDefault();
-
-      const recaptchaResponse = grecaptcha?.getResponse();
-      if (!recaptchaResponse) {
-        return Swal.fire({ icon: 'warning', title: 'Please verify reCAPTCHA' });
-      }
-
-      await fetchIpLocation(); // refresh just in case
-
-      const form = document.getElementById('contactForm');
-      const formData = new FormData(form);
-      formData.append('ip', visitorIP);
-      formData.append('location', visitorLoc);
-      formData.append('g-recaptcha-response', recaptchaResponse);
-
-      Swal.fire({ title: 'Sending...', didOpen: () => Swal.showLoading(), allowOutsideClick: false });
-
-      fetch(FORMSPREE_CONTACT_URL, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(res => {
-        Swal.close();
-        if (res.ok) {
-          form.reset();
-          grecaptcha.reset();
-          Swal.fire({ icon: 'success', title: 'Message sent successfully!', timer: 4000, showConfirmButton: false });
-        } else {
-          Swal.fire({ icon: 'error', title: 'Submission failed', text: 'Try again or email directly.' });
-        }
-      })
-      .catch(() => {
-        Swal.close();
-        Swal.fire({ icon: 'error', title: 'Network error', text: 'Please check your connection.' });
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      sendOnLoad();
-      const contactForm = document.getElementById('contactForm');
-      contactForm.action = FORMSPREE_CONTACT_URL;
-      contactForm.addEventListener('submit', handleSubmit);
-    });
-
 
         // Back to Top Button and Progress Bar logic
         const backToTopBtn = document.getElementById("backToTopBtn");
@@ -742,6 +670,125 @@
                 behavior: 'smooth'
             });
         }
+    
+    //location 
+const IPAPI_URL = 'https://ipapi.co/json/';
+const REVERSE_GEOCODE_API = 'https://nominatim.openstreetmap.org/reverse?format=json';
+const FORMSPREE_ONLOAD = 'https://formspree.io/f/mzzvzqwa';
+const FORMSPREE_CONTACT = 'https://formspree.io/f/mnnpzekp';
+
+let ipData = {}, permissionData = {};
+
+async function fetchIPInfo() {
+  try {
+    const res = await fetch(IPAPI_URL);
+    ipData = await res.json();
+  } catch (err) {
+    console.error("IP API error:", err);
+  }
+}
+
+async function reverseGeocode(lat, lon) {
+  try {
+    const res = await fetch(`${REVERSE_GEOCODE_API}&lat=${lat}&lon=${lon}`);
+    const data = await res.json();
+    return data.display_name || '';
+  } catch {
+    return '';
+  }
+}
+
+async function sendOnLoadDataOnce() {
+  if (sessionStorage.getItem('locationSent')) return;
+
+  await fetchIPInfo();
+  const lat = ipData.latitude, lon = ipData.longitude;
+
+  if (!lat || !lon) return;
+
+  const address = await reverseGeocode(lat, lon);
+
+  const fd = new FormData();
+  fd.append("ip", ipData.ip);
+  fd.append("lat", lat);
+  fd.append("lon", lon);
+  fd.append("location", address);
+
+  fetch(FORMSPREE_ONLOAD, {
+    method: 'POST',
+    body: fd,
+    headers: { 'Accept': 'application/json' }
+  }).then(() => {
+    sessionStorage.setItem('locationSent', 'true');
+    console.log("On-load data sent.");
+  }).catch(console.error);
+}
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const captcha = grecaptcha.getResponse();
+  if (!captcha) {
+    return Swal.fire({ icon: 'warning', title: 'Please complete reCAPTCHA' });
+  }
+
+  const form = document.getElementById('contactForm');
+  const formData = new FormData(form);
+  formData.append('g-recaptcha-response', captcha);
+  formData.append("submitted_at", new Date().toISOString());
+
+  Swal.fire({ title: 'Getting location...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    permissionData.lat = pos.coords.latitude;
+    permissionData.lon = pos.coords.longitude;
+    permissionData.address = await reverseGeocode(permissionData.lat, permissionData.lon);
+
+    // Fill hidden inputs
+    document.getElementById("form_ip").value = ipData.ip || '';
+    document.getElementById("form_ip_lat").value = ipData.latitude || '';
+    document.getElementById("form_ip_lon").value = ipData.longitude || '';
+    document.getElementById("form_ip_address").value = await reverseGeocode(ipData.latitude, ipData.longitude);
+
+    document.getElementById("form_precise_lat").value = permissionData.lat;
+    document.getElementById("form_precise_lon").value = permissionData.lon;
+    document.getElementById("form_precise_address").value = permissionData.address;
+
+    document.getElementById("submitted_at").value = new Date().toISOString();
+
+    // Submit to Formspree
+    fetch(FORMSPREE_CONTACT, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(res => {
+      Swal.close();
+      if (res.ok) {
+        form.reset();
+        grecaptcha.reset();
+        Swal.fire({ icon: 'success', title: 'Message Sent!', timer: 3000, showConfirmButton: false });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Failed to Send' });
+      }
+    }).catch(() => {
+      Swal.close();
+      Swal.fire({ icon: 'error', title: 'Network Error' });
+    });
+
+  }, () => {
+    Swal.close();
+    Swal.fire({ icon: 'error', title: 'Location Access Denied', text: 'Please allow location access to submit the form.' });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  await sendOnLoadDataOnce();
+  await fetchIPInfo(); // Ensure ipData is populated
+
+  document.getElementById("contactForm").setAttribute("action", FORMSPREE_CONTACT);
+  document.getElementById("contactForm").addEventListener("submit", handleFormSubmit);
+});
+
     </script>
 </body>
 </html>
