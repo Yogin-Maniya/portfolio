@@ -736,7 +736,7 @@
       formData.append('g-recaptcha-response', captcha);
       formData.append("submitted_at", new Date().toISOString());
 
-      Swal.fire({ title: 'Getting location...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      Swal.fire({ title: 'Sending ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
       let lat, lon, address;
 
