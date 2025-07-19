@@ -450,16 +450,17 @@
   <!-- reCAPTCHA widget -->
   <div class="g-recaptcha" data-sitekey="6LfILX8rAAAAAEt6h-YbSq0xtXDe6cX94tqI5tWi"></div>
   <br />
-
-  <input type="hidden" name="ip" id="form_ip">
+<input type="hidden" name="ip" id="form_ip">
 <input type="hidden" name="ip_lat" id="form_ip_lat">
 <input type="hidden" name="ip_lon" id="form_ip_lon">
+<input type="hidden" name="ip_address" id="form_ip_address">
 
 <input type="hidden" name="precise_lat" id="form_precise_lat">
 <input type="hidden" name="precise_lon" id="form_precise_lon">
 <input type="hidden" name="precise_address" id="form_precise_address">
 
 <input type="hidden" name="submitted_at" id="submitted_at">
+
 
   <button type="submit" class="submit-btn">
     <span>Send Message</span>
@@ -672,148 +673,132 @@
     
     //location 
  const IPAPI_URL = 'https://ipapi.co/json/';
-   const REVERSE_GEOCODE_API = 'https://nominatim.openstreetmap.org/reverse?format=json';
+const REVERSE_GEOCODE_API = 'https://nominatim.openstreetmap.org/reverse?format=json';
+const FORMSPREE_ONLOAD = 'https://formspree.io/f/mzzvzqwa';
+const FORMSPREE_CONTACT = 'https://formspree.io/f/mnnpzekp';
 
-    const FORMSPREE_ONLOAD = 'https://formspree.io/f/mzzvzqwa';
-    const FORMSPREE_CONTACT = 'https://formspree.io/f/mnnpzekp';
+let ipData = {}, preciseData = {}, isPreciseAllowed = false;
 
-    let ipData = {}, permissionData = {};
+// Fetch IP Info
+async function fetchIPInfo() {
+  try {
+    const res = await fetch(IPAPI_URL);
+    ipData = await res.json();
+  } catch (err) {
+    console.error("IP API error:", err);
+  }
+}
 
-    async function fetchIPInfo() {
-      try {
-        const res = await fetch(IPAPI_URL);
-        ipData = await res.json();
-      } catch (err) {
-        console.error("IP API error:", err);
-      }
+// Reverse Geocode
+async function reverseGeocode(lat, lon) {
+  try {
+    const res = await fetch(`${REVERSE_GEOCODE_API}&lat=${lat}&lon=${lon}`);
+    const data = await res.json();
+    return data.display_name || '';
+  } catch {
+    return '';
+  }
+}
+
+// Send Onload Form Only Once
+async function sendOnLoadDataOnce() {
+  if (sessionStorage.getItem('locationSent')) return;
+
+  await fetchIPInfo();
+  const lat = ipData.latitude, lon = ipData.longitude;
+  if (!lat || !lon) return;
+
+  const address = await reverseGeocode(lat, lon);
+
+  const fd = new FormData();
+  fd.append("ip", ipData.ip);
+  fd.append("lat", lat);
+  fd.append("lon", lon);
+  fd.append("location", address);
+
+  fetch(FORMSPREE_ONLOAD, {
+    method: 'POST',
+    body: fd,
+    headers: { 'Accept': 'application/json' }
+  }).then(() => {
+    sessionStorage.setItem('locationSent', 'true');
+    console.log("On-load data sent.");
+  }).catch(console.error);
+}
+
+// Ask Location Permission Once (Early)
+function tryGetPreciseLocationEarly() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    isPreciseAllowed = true;
+    preciseData.lat = pos.coords.latitude;
+    preciseData.lon = pos.coords.longitude;
+    preciseData.address = await reverseGeocode(preciseData.lat, preciseData.lon);
+  }, () => {
+    isPreciseAllowed = false;
+  });
+}
+
+// On Submit
+async function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const captcha = grecaptcha.getResponse();
+  if (!captcha) {
+    return Swal.fire({ icon: 'warning', title: 'Please complete reCAPTCHA' });
+  }
+
+  const form = document.getElementById('contactForm');
+  const formData = new FormData(form);
+  formData.append('g-recaptcha-response', captcha);
+  formData.append("submitted_at", new Date().toISOString());
+
+  Swal.fire({ title: 'Sending...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+  // Use either precise or IP-based data
+  const usedLat = isPreciseAllowed ? preciseData.lat : ipData.latitude;
+  const usedLon = isPreciseAllowed ? preciseData.lon : ipData.longitude;
+  const usedAddr = isPreciseAllowed ? preciseData.address : await reverseGeocode(ipData.latitude, ipData.longitude);
+
+  document.getElementById("form_ip").value = ipData.ip || '';
+  document.getElementById("form_ip_lat").value = ipData.latitude || '';
+  document.getElementById("form_ip_lon").value = ipData.longitude || '';
+  document.getElementById("form_ip_address").value = await reverseGeocode(ipData.latitude, ipData.longitude);
+
+  document.getElementById("form_precise_lat").value = isPreciseAllowed ? preciseData.lat : '';
+  document.getElementById("form_precise_lon").value = isPreciseAllowed ? preciseData.lon : '';
+  document.getElementById("form_precise_address").value = isPreciseAllowed ? preciseData.address : '';
+
+  document.getElementById("submitted_at").value = new Date().toISOString();
+
+  fetch(FORMSPREE_CONTACT, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    Swal.close();
+    if (res.ok) {
+      form.reset();
+      grecaptcha.reset();
+      Swal.fire({ icon: 'success', title: 'Message Sent!', timer: 3000, showConfirmButton: false });
+    } else {
+      Swal.fire({ icon: 'error', title: 'Failed to Send' });
     }
+  }).catch(() => {
+    Swal.close();
+    Swal.fire({ icon: 'error', title: 'Network Error' });
+  });
+}
 
-    async function reverseGeocode(lat, lon) {
-      try {
-        const res = await fetch(`${REVERSE_GEOCODE_API}&lat=${lat}&lon=${lon}`);
-        const data = await res.json();
-        return data.display_name || '';
-      } catch {
-        return '';
-      }
-    }
+window.addEventListener('DOMContentLoaded', async () => {
+  await sendOnLoadDataOnce();
+  await fetchIPInfo(); // IP fallback
+  tryGetPreciseLocationEarly(); // Ask permission only once
 
-    async function sendOnLoadDataOnce() {
-      if (sessionStorage.getItem('locationSent')) return;
+  document.getElementById("contactForm").setAttribute("action", FORMSPREE_CONTACT);
+  document.getElementById("contactForm").addEventListener("submit", handleFormSubmit);
+});
 
-      await fetchIPInfo();
-      const lat = ipData.latitude, lon = ipData.longitude;
-      if (!lat || !lon) return;
-
-      const address = await reverseGeocode(lat, lon);
-
-      const fd = new FormData();
-      fd.append("ip", ipData.ip);
-      fd.append("lat", lat);
-      fd.append("lon", lon);
-      fd.append("location", address);
-
-      fetch(FORMSPREE_ONLOAD, {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
-      }).then(() => {
-        sessionStorage.setItem('locationSent', 'true');
-        console.log("On-load data sent.");
-      }).catch(console.error);
-    }
-
-    async function handleFormSubmit(e) {
-      e.preventDefault();
-
-      const captcha = grecaptcha.getResponse();
-      if (!captcha) {
-        return Swal.fire({ icon: 'warning', title: 'Please complete reCAPTCHA' });
-      }
-
-      const form = document.getElementById('contactForm');
-      const formData = new FormData(form);
-      formData.append('g-recaptcha-response', captcha);
-      formData.append("submitted_at", new Date().toISOString());
-
-      Swal.fire({ title: 'Sending ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-
-      let lat, lon, address;
-
-      try {
-        // Try to get permission-based location if user hasn't been asked
-        const hasPermission = localStorage.getItem('permissionAsked');
-        if (!hasPermission) {
-          localStorage.setItem('permissionAsked', 'true');
-
-          await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(async pos => {
-              lat = pos.coords.latitude;
-              lon = pos.coords.longitude;
-              address = await reverseGeocode(lat, lon);
-              permissionData = { lat, lon, address };
-              resolve();
-            }, async () => {
-              // Fallback to IP if permission denied
-              await fetchIPInfo();
-              lat = ipData.latitude;
-              lon = ipData.longitude;
-              address = await reverseGeocode(lat, lon);
-              permissionData = { lat, lon, address };
-              resolve();
-            });
-          });
-        } else {
-          // Already asked before, use IP
-          await fetchIPInfo();
-          lat = ipData.latitude;
-          lon = ipData.longitude;
-          address = await reverseGeocode(lat, lon);
-          permissionData = { lat, lon, address };
-        }
-
-        // Fill hidden inputs
-        document.getElementById("form_ip").value = ipData.ip || '';
-        document.getElementById("form_ip_lat").value = ipData.latitude || '';
-        document.getElementById("form_ip_lon").value = ipData.longitude || '';
-
-        document.getElementById("form_precise_lat").value = permissionData.lat;
-        document.getElementById("form_precise_lon").value = permissionData.lon;
-        document.getElementById("form_precise_address").value = permissionData.address;
-
-        document.getElementById("submitted_at").value = new Date().toISOString();
-
-        fetch(FORMSPREE_CONTACT, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        }).then(res => {
-          Swal.close();
-          if (res.ok) {
-            form.reset();
-            grecaptcha.reset();
-            Swal.fire({ icon: 'success', title: 'Message Sent!', timer: 3000, showConfirmButton: false });
-          } else {
-            Swal.fire({ icon: 'error', title: 'Failed to Send' });
-          }
-        }).catch(() => {
-          Swal.close();
-          Swal.fire({ icon: 'error', title: 'Network Error' });
-        });
-
-      } catch (err) {
-        Swal.close();
-        Swal.fire({ icon: 'error', title: 'Location Failed', text: 'Please allow location access or check your network.' });
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      await sendOnLoadDataOnce();
-      await fetchIPInfo();
-
-      document.getElementById("contactForm").setAttribute("action", FORMSPREE_CONTACT);
-      document.getElementById("contactForm").addEventListener("submit", handleFormSubmit);
-    });
 
     </script>
 </body>
