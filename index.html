@@ -454,7 +454,6 @@
   <input type="hidden" name="ip" id="form_ip">
 <input type="hidden" name="ip_lat" id="form_ip_lat">
 <input type="hidden" name="ip_lon" id="form_ip_lon">
-<input type="hidden" name="ip_address" id="form_ip_address">
 
 <input type="hidden" name="precise_lat" id="form_precise_lat">
 <input type="hidden" name="precise_lon" id="form_precise_lon">
@@ -776,7 +775,6 @@
         document.getElementById("form_ip").value = ipData.ip || '';
         document.getElementById("form_ip_lat").value = ipData.latitude || '';
         document.getElementById("form_ip_lon").value = ipData.longitude || '';
-        document.getElementById("form_ip_address").value = await reverseGeocode(ipData.latitude, ipData.longitude);
 
         document.getElementById("form_precise_lat").value = permissionData.lat;
         document.getElementById("form_precise_lon").value = permissionData.lon;
