@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Yogin Maniya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base styles from your main portfolio (adjust if necessary for this standalone page) */
+        :root {
+            /* Color Palette */
+            --bg-primary: #0D111C; /* Very dark blue-gray, almost black for deep contrast */
+            --bg-secondary: #161B22; /* Slightly lighter dark for sections */
+            --text-primary: #E2E8F0; /* Off-white for main text */
+            --text-secondary: #9CA3AF; /* Muted gray for secondary text/descriptions */
+            --accent: #6C63FF; /* Vibrant, deep purple-blue for highlights */
+            --accent-hover: #5A4EFF; /* Lighter accent for hover states */
+            --card-bg: #1F242A; /* Darker gray for card backgrounds */
+            --border-color: #384152; /* Subtle, cool gray for borders */
+            --gradient-start: #1D2A3A; /* Deeper gradient start */
+            --gradient-end: #0B0E13; /* Almost black gradient end */
+            --progress-gradient: linear-gradient(to right, #6C63FF, #8E2DE2); /* Purple to Violet for progress bars/highlights */
+
+            /* Typography */
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Shadows (for neumorphic/soft UI effect) */
+            --shadow-outer: 6px 6px 12px rgba(0, 0, 0, 0.5), -6px -6px 12px rgba(255, 255, 255, 0.05);
+            --shadow-card-hover: 10px 10px 20px rgba(0, 0, 0, 0.6), -10px -10px 20px rgba(255, 255, 255, 0.03);
+
+            /* Transitions */
+            --transition-speed: 0.4s;
+            --transition-easing: ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px; /* Adjusted for content */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Custom scrollbar */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--accent);
+            border-radius: 10px;
+            border: 2px solid var(--bg-primary);
+        }
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-primary);
+        }
+
+        /* Privacy Section Styling */
+        .privacy-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-card-hover); /* More prominent shadow */
+            padding: 50px; /* Increased padding */
+            margin: 80px auto; /* More margin */
+            border: 1px solid var(--border-color);
+        }
+
+        .privacy-section h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem; /* Larger title */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent); /* Accent color for main title */
+            text-align: center;
+            position: relative;
+        }
+        .privacy-section h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--progress-gradient);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .privacy-section .last-updated {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem; /* More space */
+            font-size: 0.95rem;
+        }
+
+        .privacy-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .privacy-section h3 {
+            font-family: var(--font-heading);
+            margin-top: 3.5rem; /* More space above headings */
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-size: 1.8rem; /* Slightly larger sub-headings */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color); /* Subtle line below heading */
+            padding-bottom: 0.8rem;
+        }
+
+        .privacy-section h3 .icon {
+            color: var(--accent);
+            width: 28px;
+            height: 28px;
+        }
+
+        .privacy-section ul {
+            padding-left: 2rem; /* Increased padding for list items */
+            list-style: none; /* Remove default list style */
+            margin-bottom: 2rem;
+        }
+
+        .privacy-section ul li {
+            position: relative;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            padding-left: 1.8rem; /* Space for custom bullet */
+        }
+        .privacy-section ul li::before { /* Custom bullet point */
+            content: '\2022'; /* Unicode for bullet point */
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em; /* Negative margin to position bullet */
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+        }
+
+        .privacy-section a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color var(--transition-speed) var(--transition-easing), text-decoration var(--transition-speed) var(--transition-easing);
+            font-weight: 500;
+        }
+
+        .privacy-section a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .contact-link-wrapper {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.1rem 2.2rem;
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.05rem;
+            box-shadow: var(--shadow-outer);
+            transition: all var(--transition-speed) var(--transition-easing);
+        }
+
+      
+        /* Footer Styling */
+        .footer {
+            text-align: center;
+            margin-top: 60px; /* More margin */
+            padding: 30px; /* More padding */
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+            .privacy-section {
+                padding: 40px 25px;
+                margin: 40px auto;
+            }
+            .privacy-section h1 {
+                font-size: 2.2rem;
+            }
+            .privacy-section h3 {
+                font-size: 1.5rem;
+                margin-top: 2.5rem;
+            }
+            .privacy-section p {
+                font-size: 1rem;
+            }
+            .privacy-section ul {
+                padding-left: 1.5rem;
+            }
+            .privacy-section ul li {
+                font-size: 0.95rem;
+                padding-left: 1.5rem;
+            }
+            .privacy-section ul li::before {
+                margin-left: -1.2em;
+            }
+            .contact-link {
+                padding: 1rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 14px;
+            }
+            .privacy-section {
+                padding: 30px 20px;
+                margin: 30px auto;
+            }
+            .privacy-section h1 {
+                font-size: 1.8rem;
+            }
+            .privacy-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="privacy-section container">
+            <h1>Privacy Policy</h1>
+            <p class="last-updated">Last updated: <strong>July 19, 2025</strong></p>
+
+            <p>This website, owned by **Yogin Maniya**, collects limited information to improve user experience and functionality.</p>
+
+            <h3><i data-lucide="search" class="icon"></i> What We Collect</h3>
+            <ul>
+                <li>Your IP address</li>
+                <li>Your approximate location (based on IP)</li>
+                <li>Your precise location (only if you allow browser location access)</li>
+                <li>Any information you provide in the contact form (e.g., name, email, message)</li>
+            </ul>
+
+            <h3><i data-lucide="target" class="icon"></i> Why We Collect It</h3>
+            <ul>
+                <li>To analyze site usage and improve performance</li>
+                <li>To respond to your inquiries submitted via the contact form</li>
+            </ul>
+
+            <h3><i data-lucide="lock" class="icon"></i> How It's Stored</h3>
+            <p>Form data is sent securely to our backend provider (Formspree). We are committed to protecting your privacy and do not sell, rent, or share your personal data with third parties for their marketing purposes.</p>
+
+            <h3><i data-lucide="shield" class="icon"></i> Your Rights</h3>
+            <p>You have the right to request access to or deletion of any personal data we may have stored about you. To exercise these rights, please contact us through the site’s contact form, providing sufficient details to identify your request.</p>
+
+            <div class="contact-link-wrapper">
+                <a href="/#contact" class="contact-link">
+                    <span>Contact Us</span>
+                    <i data-lucide="mail"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        &copy; 2025 Yogin Maniya. All rights reserved.
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
