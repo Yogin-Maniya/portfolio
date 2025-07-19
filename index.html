@@ -743,35 +743,47 @@
       try {
         // Try to get permission-based location if user hasn't been asked
         const hasPermission = localStorage.getItem('permissionAsked');
-        if (!hasPermission) {
-          localStorage.setItem('permissionAsked', 'true');
+    if (!hasPermission) {
+  localStorage.setItem('permissionAsked', 'true');
 
-          await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(async pos => {
-              lat = pos.coords.latitude;
-              lon = pos.coords.longitude;
-              address = await reverseGeocode(lat, lon);
-              permissionData = { lat, lon, address };
-              resolve();
-            }, async () => {
-              // Fallback to IP if permission denied
-              await fetchIPInfo();
-              lat = ipData.latitude;
-              lon = ipData.longitude;
-              address = await reverseGeocode(lat, lon);
-              permissionData = { lat, lon, address };
-              resolve();
-            });
-          });
-        } else {
-          // Already asked before, use IP
-          await fetchIPInfo();
-          lat = ipData.latitude;
-          lon = ipData.longitude;
-          address = await reverseGeocode(lat, lon);
-          permissionData = { lat, lon, address };
-        }
+  await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(async pos => {
+      lat = pos.coords.latitude;
+      lon = pos.coords.longitude;
+      address = await reverseGeocode(lat, lon);
+      permissionData = { lat, lon, address };
+      resolve();
+    }, async () => {
+      // Fallback to IP if permission denied
+      await fetchIPInfo();
+      lat = ipData.latitude;
+      lon = ipData.longitude;
+      address = await reverseGeocode(lat, lon);
+      permissionData = { lat, lon, address };
+      resolve();
+    });
+  });
+} else {
+  // Already asked before, use permissionData from geolocation again
+  await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(async pos => {
+      lat = pos.coords.latitude;
+      lon = pos.coords.longitude;
+      address = await reverseGeocode(lat, lon);
+      permissionData = { lat, lon, address };
+      resolve();
+    }, async () => {
+      await fetchIPInfo();
+      lat = ipData.latitude;
+      lon = ipData.longitude;
+      address = await reverseGeocode(lat, lon);
+      permissionData = { lat, lon, address };
+      resolve();
+    });
+  });
+}
 
+       
         // Fill hidden inputs
         document.getElementById("form_ip").value = ipData.ip || '';
         document.getElementById("form_ip_lat").value = ipData.latitude || '';
